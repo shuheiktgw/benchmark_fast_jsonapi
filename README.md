@@ -1,24 +1,43 @@
-# README
+# Benchmark for Netflix/fast_jsonapi
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a sample Rails application to benchmark [Netflix/fast_jsonapi](https://github.com/Netflix/fast_jsonapi) in a real Rails environment. 
 
-Things you may want to cover:
+# How it works?
+I created `Company has many employees` relationship with `AmsCompany.rb` and `AmsEmployee.rb` for `ActiveModel::Serializer` and `FjaCompany.rb` and `FjaEmployee.rb` for `FastJsonapi`.
 
-* Ruby version
+All the benchmarks are taken in `spec/serializers/performance_spec.rb`. 
 
-* System dependencies
+# Result
 
-* Configuration
+Fast_jsonapi (FJA) may not be as fast as it is expected to be compared to ActiveModel::Serializer (AMS) depending on situations...?
 
-* Database creation
+|  | Serializer | 1 company | 25 companies |
+|:-----------:|:------------:|:------------|:------------|
+| 1 employee | AMS | 15.811999997822568 | 31.31099999882281 |
+| 1 employee | FJA | 13.44200001040008 | 9.640000003855675 |
+| 25 employees | AMS | 8.14800000807736 | 111.75599999842234 |
+| 25 employees | FJA | 5.560000005061738 | 91.2769999995362 |
+| 250 employees | AMS | 54.18900000222493 | 794.873999999254 |
+| 250 employees | FJA | 31.94699999585282 | 791.3709999993443 |
 
-* Database initialization
+# How to take a benchmark?
 
-* How to run the test suite
+Install dependencies first.
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+$ bundle install 
+```
 
-* Deployment instructions
+Then create tables.
 
-* ...
+```
+$ bundle ex rake db:create
+$ bundle ex rake db:migrate
+$ bundle ex rake db:migrate RIALS_ENV=test 
+```
+
+Finally run spec.
+
+```
+$ bundle ex rspec
+```

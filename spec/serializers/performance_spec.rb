@@ -54,7 +54,7 @@ describe 'Serializers Performance' do
       print 'FastJsonapi:              '
       puts Benchmark.measure { FjaCompanySerializer.new(FjaCompany.preload(:fja_employees).all, include: [:fja_employees]).serialized_json }.real * 1000
 
-      print 'ActiveRecord::Serializer: '
+      print 'ActiveModel::Serializer: '
       puts Benchmark.measure { ActiveModelSerializers::SerializableResource.new(AmsCompany.preload(:ams_employees).all).as_json }.real * 1000
 
     end
