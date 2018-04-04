@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-describe 'Serializers Performance' do
+describe 'Serializers Performance with json_api adapter' do
   before(:all) do
+    ActiveModel::Serializer.config.adapter = :json_api
+
     class AmsCompanySerializer < ActiveModel::Serializer
       attributes :name, :updated_at, :created_at
 
@@ -55,8 +57,7 @@ describe 'Serializers Performance' do
       puts Benchmark.measure { FjaCompanySerializer.new(FjaCompany.preload(:fja_employees).all, include: [:fja_employees]).serialized_json }.real * 1000
 
       print 'ActiveModel::Serializer: '
-      puts Benchmark.measure { ActiveModelSerializers::SerializableResource.new(AmsCompany.preload(:ams_employees).all).as_json }.real * 1000
-
+      puts Benchmark.measure { ActiveModelSerializers::SerializableResource.new(AmsCompany.preload(:ams_employees).all, include: [:ams_employees]).to_json }.real * 1000
     end
   end
 
