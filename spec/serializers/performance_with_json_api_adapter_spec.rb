@@ -39,7 +39,7 @@ describe 'Serializers Performance with json_api adapter' do
   before do
     ams_companies = create_list(:ams_company, company_count)
     ams_companies.each do |ams_company|
-    create_list(:ams_employee, employee_count, ams_company: ams_company)
+      create_list(:ams_employee, employee_count, ams_company: ams_company)
     end
 
     fja_companies = create_list(:fja_company, company_count)
