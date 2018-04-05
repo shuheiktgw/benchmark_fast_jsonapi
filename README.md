@@ -12,7 +12,7 @@ All the benchmarks are taken in `spec/serializers/performance_with_json_api_adap
 
 # Results
 
-### `FastJsonapi` against`ActiveModel::Serializer` with `json_api adapter`
+### `FastJsonapi` (FJA) against`ActiveModel::Serializer` (AMS) with `json_api adapter`
 
 |  | Serializer | 1 company | 25 companies |
 |:-----------:|:------------:|:------------|:------------|
