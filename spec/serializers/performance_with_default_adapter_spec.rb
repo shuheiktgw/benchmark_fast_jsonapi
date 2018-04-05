@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Serializers Performance without json_api adapter' do
+describe 'Serializers Performance with default adapter' do
   before(:all) do
     class AmsCompanySerializer < ActiveModel::Serializer
       attributes :name, :updated_at, :created_at
