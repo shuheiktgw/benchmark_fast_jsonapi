@@ -51,11 +51,19 @@ describe 'Serializers Performance with default adapter' do
       puts "#{ company_count } companies"
       puts "#{ employee_count } employees"
 
-      print 'FastJsonapi:              '
-      puts Benchmark.measure { FjaCompanySerializer.new(FjaCompany.preload(:fja_employees).all, include: [:fja_employees]).serialized_json }.real * 1000
+      fja_total_time = 0
+      ams_total_time = 0
 
-      print 'ActiveModel::Serializer: '
-      puts Benchmark.measure { ActiveModelSerializers::SerializableResource.new(AmsCompany.preload(:ams_employees).all).to_json }.real * 1000
+      100.times do
+        fja_total_time += Benchmark.measure { FjaCompanySerializer.new(FjaCompany.preload(:fja_employees).all, include: [:fja_employees]).serialized_json }.real * 1000
+        ams_total_time += Benchmark.measure { ActiveModelSerializers::SerializableResource.new(AmsCompany.preload(:ams_employees).all).to_json }.real * 1000
+      end
+
+      print 'FastJsonapi:              '
+      puts fja_total_time / 100.0
+
+      print 'ActiveModel::Serializer:  '
+      puts ams_total_time / 100.0
     end
   end
 
